@@ -14,14 +14,14 @@
 </head>
 
 <body>
-    <div class="app">
 
+    <div id="app">
         <div class="header">
             <div class="container">
                 <div class="logo">ToDoList</div>
                 <div class="form">
-                    <input type="text" placeholder="Введите задачу...">
-                    <button class="btn">Add a new task</button>
+                    <input type="text" v-bind:value="valueInput" placeholder="Введите задачу..." v-on:input="handlyInput" v-on:keypress.enter="addTask">
+                    <button class="btn" v-on:click="addTask">Add a new task</button>
                 </div>
             </div>
         </div>
@@ -29,33 +29,31 @@
 
             <h2>
                 <span>ToDo</span>
-                <span class="mask-num">10</span>
+                <span class="mask-num">{{needDoList.length}}</span>
             </h2>
 
             <ul class="mask-list">
-                <li>
+                <li v-for="(mask,index) in needDoList" :key="mask.id">
                     <div>
-                        <input type="checkbox">
-                        <span>New video</span>
-
+                        <input type="checkbox" v-on:change="doCheck(index, 'need')">
+                        <span>{{ mask.title }}</span>
                     </div>
-                    <button class="btn-remove">Remove</button>
+                    <button class="btn-remove" v-on:click="removeMask(index, 'need')">Remove</button>
 
                 </li>
             </ul>
             <h2>
                 <span>done</span>
-                <span class="mask-num">10</span>
+                <span class="mask-num">{{completeList.length}}</span>
             </h2>
 
             <ul class="mask-list complete-list">
-                <li>
+                <li v-for="(mask,index) in completeList" :key="mask.id">
                     <div>
-                        <input type="checkbox" checked>
-                        <span>add code</span>
-
+                        <input type="checkbox" v-on:change="doCheck(index, 'complete')" checked>
+                        <span>{{ mask.title }}</span>
                     </div>
-                    <button class="btn-remove">Remove</button>
+                    <button class="btn-remove" v-on:click="removeMask(index, 'complete')">Remove</button>
                 </li>
             </ul>
 
@@ -63,8 +61,8 @@
 
     </div>
 
-    <script src=" https://unpkg.com/vue@next "></script>
-    <script src="app.js "></script>
+    <script src="https://unpkg.com/vue@next"></script>
+    <script src="./app.js"></script>
 </body>
 
 </html>
